@@ -1,0 +1,80 @@
+body {
+    font-family: 'Roboto', Verdana, sans-serif;
+}
+
+/* styling for title; will stay on top of page
+   margin-top to show background bleed through */
+h1 {
+    width: 600px;
+    font-family: 'Fredoka One', cursive;
+    text-align: center;
+    border: 2px solid black;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* centers title text */
+.header-text {
+    display: inline-block;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+/* Game play will render uniform size throughout quiz */
+.boxes {
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* Setting responsive design */
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.container {
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Specificity for bodiv boxes */
+div.boxes {
+    border: 2px solid black;
+    text-align: center;
+}
+
+.btn-style {
+    height: 50px;
+    width: 100px;
+    background-color: white;
+    border: 2px solid black;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+/* Toggles boxes that render and disappear during play */
+.hidden {
+    display: none;
+}
+
+footer {
+    width: 600px;
+    border: 2px solid black;
+    margin-top: 20px;
+}
+
+ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-evenly;
+    padding-left: 0px;
+}

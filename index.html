@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <link href="https://fonts.googleapis.com/css?family=Fredoka+One|Roboto&display=swap" rel="stylesheet">
+    <title>Diabetes Quiz App</title>
+</head>
+<body>
+    <!-- Title header will render from load, remain throughout gameplay -->
+    <header class='title'>
+        <h1><span class="header-text">A Type-One-Derful Quiz</span></h1>
+    </header>
+    <main>
+        <!-- Starting Page Render On Page Load -->
+        <section>
+        <div class='boxes'>
+            <h2>Take The Sugar Challenge!</h2>
+            <div class='container'><p>
+                More than 30 million Americans are diagnosed with Type 1 or Type 2 diabetes. I can help you find out whether you're in a healthy range of diabetes know-how. 
+            </p>
+            <p>
+                Take this sweet quiz and if you learn something new, you're helping your diabetic loved ones feel more understood!
+            </p>
+            <p>
+                *** Disclaimer: I am NOT a medical doctor so do not use this as official medical advice. ***
+            </p>
+            </div>
+            <button type="button" class="btn-style">Let's Start!</button>
+        </div> 
+        </section>
+        
+        <!-- This section should render when "Let's Start!" button is clicked -->
+        <!-- This layout is an example of how it should render -->
+        <section class="question-form hidden"> 
+        <div class='boxes'>
+            <form>
+                <legend>
+                    <h2>
+                    <!-- Change depending on what question you're at -->
+                    <p>Question #1</p>
+                    <p> What affects blood sugar?</p>
+                    </h2>
+                </legend>
+
+                <p>
+                <input type="radio" value="xx" name="answer" required>
+                <label>Fructose</label>
+                </p>
+
+                <p>
+                <input type="radio" value="xx" name="answer" required>
+                <label>Glucose</label>
+                </p>
+
+                <p>
+                <input type="radio" value="xx" name="answer" required>
+                <label>Cellulose</label>
+                </p>
+            
+                <button type="button" class="btn-style">Check My Answer</button>
+            </form>
+        </div>
+        </section>
+
+        <!-- This section will render whenever the "Check Answer" button is clicked -->
+        <section class="message-box hidden">
+            <div class='boxes'>
+                <!-- Different messages will display from message data depending on outcome -->
+                <h2>Wait A Moment!</h2>
+                <p>
+                    You forgot to pick an answer!
+                </p>
+                    
+                <button type="button" class="btn-style">Okay</button>
+            </div> 
+        </section>
+
+        <!-- Render once all questions are answered -->
+        <section class="game-end hidden">
+                <div class='boxes'>
+                    <!-- Game end confirmation will include message depending on the score -->
+                    <h2>Not gonna sugar coat it...</h2>
+                    <!-- show the tallie score -->
+                    <p>
+                        You scored 6 out of 10
+                    </p>
+                        
+                    <button type="button" class="btn-style">Do Over Please</button>
+                </div> 
+            </section>
+        
+        <!-- This will render once start button is pressed and will stay throughout the game -->
+        <footer class='score'> 
+        <ul>
+            <li class='page'>Question x of 10</li>
+            <li class='questions-correct'>Correct:</li>
+            <li class='questions-incorrect'>Incorrect:</li>
+        </ul>
+        </footer>
+    </main>
+    
+    
+</body>
+</html>
