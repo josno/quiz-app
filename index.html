@@ -8,6 +8,8 @@
     <link href="https://fonts.googleapis.com/css?family=Fredoka+One|Roboto&display=swap" rel="stylesheet">
     <title>Diabetes Quiz App</title>
 </head>
+<!-- All boxes are set to hidden except for the initial render page 
+Remove the 'hidden' class to view other elements -->
 <body>
     <!-- Title header will render from load, remain throughout gameplay -->
     <header class='title'>
@@ -18,7 +20,7 @@
         <section>
         <div class='boxes'>
             <h2>Take The Sugar Challenge!</h2>
-            <div class='container'><p>
+            <div class='text-container'><p>
                 More than 30 million Americans are diagnosed with Type 1 or Type 2 diabetes. I can help you find out whether you're in a healthy range of diabetes know-how. 
             </p>
             <p>
@@ -93,7 +95,7 @@
             </section>
         
         <!-- This will render once start button is pressed and will stay throughout the game -->
-        <footer class='score'> 
+        <footer class='score hidden'> 
         <ul>
             <li class='page'>Question x of 10</li>
             <li class='questions-correct'>Correct:</li>
