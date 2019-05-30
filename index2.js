@@ -11,6 +11,13 @@ function startQuiz() {
 
 function getQuestion(){
     // gets the question from the array and returns in HTML format
+    // return html tags to append to .html file; use string template
+    //consider
+    // <h2>Question #<span id="number">1</span><br><span id="question-text">What blah blah?</span></h2>
+    // $('#number').text(questionNumber)
+
+    // $('#question-text').text(questionText)
+    // Add questions; consider forEach
 };
 
 function quizPlay() {

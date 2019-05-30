@@ -89,5 +89,6 @@ ul {
 @media only screen and (max-width: 600px) {
     div.boxes {
       height: 600px;
+      /*start mobile design; look at screen height again*/
     }
   }
