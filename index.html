@@ -12,7 +12,7 @@
 Remove the 'hidden' class to view other elements -->
 <body>
     <!-- Title header will render from load, remain throughout gameplay -->
-    <header class='title'>
+    <header>
         <h1><span class="header-text">A Type-One-Derful Quiz</span></h1>
     </header>
     <main>
@@ -20,15 +20,16 @@ Remove the 'hidden' class to view other elements -->
         <section>
         <div class='boxes intro'>
             <h2>Take The Sugar Challenge!</h2>
-            <div class='text-container'><p>
-                More than 30 million Americans are diagnosed with Type 1 or Type 2 diabetes. I can help you find out whether you're in a healthy range of diabetes know-how. 
-            </p>
-            <p>
-                Take this sweet quiz and if you learn something new, you're helping your diabetic loved ones feel more understood!
-            </p>
-            <p>
-                *** Disclaimer: I am NOT a medical doctor so do not use this as official medical advice. ***
-            </p>
+            <div class='text-container'>
+                <p>
+                    More than 30 million Americans are diagnosed with Type 1 or Type 2 diabetes. I can help you find out whether you're in a healthy range of diabetes know-how. 
+                </p>
+                <p>
+                    Take this sweet quiz and if you learn something new, you're helping your diabetic loved ones feel more understood!
+                </p>
+                <p>
+                    *** Disclaimer: I am NOT a medical doctor so do not use this as official medical advice. ***
+                </p>
             </div>
             <div class='btn-container'> 
                 <button type="button" class="start-btn btn-style">Let's Start!</button>
@@ -38,17 +39,15 @@ Remove the 'hidden' class to view other elements -->
         
         <!-- This section should render when "Let's Start!" button is clicked -->
         <!-- This layout is an example of how it should render -->
-        <section class="question-form hidden"> 
-        <div class='boxes'>
+        <section> 
+        <div class='boxes question-form hidden'>
             <form>
                 <legend>
-                    <h2>
+                    <h2>Question #1</h2>
                     <!-- Change depending on what question you're at -->
                     <!-- change p tags to break tags -->
                     <!-- look at adding span tags -->
-                    <p>Question #1</p>
                     <p> What affects blood sugar?</p>
-                    </h2>
                 </legend>
 
                 <p>
