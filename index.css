@@ -23,6 +23,7 @@ h1 {
 
 /* Game play will render uniform size throughout quiz */
 .boxes {
+    height:500px;
     width: 600px;
     margin-left: auto;
     margin-right: auto;

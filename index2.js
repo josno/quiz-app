@@ -2,7 +2,7 @@ const STORE = [
     {
         question: "Blood sugar is also known as?",
         answer: "Glucose",
-        choices: ["Frutose","Glucose","Cellulose"],
+        choices: ["Fructose","Glucose","Cellulose"],
     },
     {
         question: "Food with a high glycemic index means:",
@@ -50,8 +50,12 @@ const STORE = [
         choices: ["It raises it.","It regulates it.","It gets rid of blood sugar."],
     },
 
-]
+];
 
+let questionNumber = 1
+let counter = 0
+const countTo = 10
+let score = 0
 
 function startQuiz() {
 // Button should start the quiz 
@@ -59,111 +63,125 @@ function startQuiz() {
     $('.intro').on('click', '.start-btn', function () {
         $('.intro').toggleClass('hidden')
         $('.question-form').toggleClass('hidden')
+        $('footer').toggleClass('hidden')
         
     });
+    
     console.log('startQuiz ran');
 };
 
-let questionNumber = 1
-let number = 4
-
 function getQuestionSentences(){
-    questionNumber += number
-    $('.question-form').append(`
-    <div class='boxes question-box'>
+        $('.question-form').append(`
+        <div class='boxes question-box'>
             <form>
                 <legend>
                     <h2>Question #<span class='question-${questionNumber}'>${questionNumber}</span></h2>
-                    <p class='question-sentence'>${STORE[number].question}</p>
+                    <p class='question-sentence'>${STORE[counter].question}</p>
                 </legend>
             </form>
             <button type="button" class="btn-style">Check My Answer</button>
-            </div>`)
-    getQuestionChoices()
-    console.log('getQuestion ran');
-};
+        </div>`)
+        getQuestionChoices()
+        console.log('getQuestion ran');
+    };
+    
+    
 
 function getQuestionChoices(){
-    let choices = STORE[number].choices
+    let choices = STORE[counter].choices
     choices.forEach(item=>
          $('.question-sentence').append(`
-         <p>
-            <input type="radio" value="xx" name="answer" required>
-            <label>${item}</label>
-        </p>`)
+            <p>
+            <input type="radio" name="question-choice" value="${item}" required>
+            <label for="option-${item}">${item}</label>
+            </p>`)
     );
-};
-    // // <p>
-    // <input type="radio" value="xx" name="answer" required>
-    // <label>Fructose</label>
-    // </p>
 
-    // <p>
-    // <input type="radio" value="xx" name="answer" required>
-    // <label>Glucose</label>
-    // </p>
-
-    // <p>
-    // <input type="radio" value="xx" name="answer" required>
-    // <label>Cellulose</label>
-    // </p>
-
-    //
-    // gets the question from the array and returns in HTML format
-    // return html tags to append to .html file; use string template
-    //consider
-    // <h2>Question #<span id="number">1</span><br><span id="question-text">What blah blah?</span></h2>
-    // $('#number').text(questionNumber)
-
-    // $('#question-text').text(questionText)
-    // Add questions; consider forEach*/
-
-function quizPlay() {
-    //call getQuestion
-    // Render questions and answer options
-    console.log('quizPlay ran');
-};
-
-function alertMessage() {
-    /*when a players presses the submit button run these three message options*/
-    //Should return one of the message functions
-    console.log('alertMessage ran');
 };
 
 function wrongAnswerMessage() {
-    //Return the correct answer; let player know they made the wrong answer
+    $(".message-box").append(`
+        <div class='boxes'>
+        <!-- Different messages will display from message data depending on outcome -->
+            <h2>Whoops!</h2>
+            <p>Wrong answer! The correct answer was:</p>
+            <p>${STORE[counter].answer}</p>
+        
+            <button type="button" class="btn-style">Gotcha! Next Question</button>
+        </div>`)
+        //nextQuestion()
     console.log('wrongAnswerMessage ran');
 };
 
 function correctAnswerMessage() {
-    //Return affirmation
-    console.log('correctAnswerMessage ran');
+    $(".message-box").append(`
+        <div class='boxes'>
+        <!-- Different messages will display from message data depending on outcome -->
+            <h2>Good Job!</h2>
+            <p>You answered correctly!</p>
+        
+            <button type="button" class="nxt-btn btn-style">Thanks! Next Question</button>
+        </div>`)
+    console.log('correctAnswerMessage ran')
 };
 
 function noAnswerMessage() {
-    //Return affirmation
+    $(".message-box").append(`
+        <div class='boxes'>
+        <!-- Different messages will display from message data depending on outcome -->
+            <h2>Wait A Moment!</h2>
+            <p>You forgot to pick an answer! Go back and pick one.</p>
+        
+            <button type="button" class="btn-style">Okay</button>
+        </div>`)
+        //StayOnQuestion()
     console.log('noAnswerMessage ran');
 };
 
-function moveOrStay() {
-    //Stay on question or move on 
+function StayOnQuestion() {
+    //stay on question
     console.log('moveOrStay ran');
 };
 
+function nextQuestion() {
+    $('.message-box').on('click', '.nxt-btn', function () {
+        $('.question-form').remove()
+        toggleMessage()
+    });
+    getQuestionSentences()
+}
+
+function toggleMessage(){
+    $('.question-form').toggleClass('hidden')
+    $('.message-box').toggleClass('hidden')
+}
+
 function submitAnswer() {
-    // Button is clicked and calls on the messages
+    $('.question-form').on('click', '.btn-style', function () {
+        let chosenAnswer = $("[type='radio']:checked").val()
+
+        if (chosenAnswer === STORE[counter].answer){
+            toggleMessage()
+            correctAnswerMessage()
+        } else if (chosenAnswer === undefined){
+            noAnswerMessage()
+        }else if (chosenAnswer !== STORE[counter].answer) {
+            toggleMessage()
+            wrongAnswerMessage()
+        } 
+    });
     console.log('submitAnswer ran');
 };
 
-function questionPage() {
-    //counter for marking which question user is on
-    //renders after successful submit
-    console.log('questionPage ran');
-};
-
 function scoreboard() {
-    //Shows incremental score
-    //shows total score at the end
+    $('main').append(`   
+    <footer class='score hidden'>    
+        <ul>
+            <li class='page'>Question ${questionNumber} of 10</li>
+            <li class='questions-correct'>Correct: ${score}</li>
+            <li class='questions-incorrect'>Incorrect:</li>
+        </ul>
+    </footer>  `)
     console.log('scoreboard ran');
 };
 
@@ -195,6 +213,9 @@ quizEnd()
 restart()
 */
 startQuiz()
+scoreboard()
 getQuestionSentences()
+submitAnswer()
+
 
 
