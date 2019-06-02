@@ -64,34 +64,51 @@ function startQuiz() {
     console.log('startQuiz ran');
 };
 
-function getQuestion(){
-    STORE.forEach(item => 
-        $('.question-form').append(`
-        <div class='boxes question-box'>
-                <form>
-                    <legend>
-                        <h2>Question #<span>1</span></h2>
-                        <p>${item.question}</p>
-                    </legend>
+let questionNumber = 1
+let number = 4
 
-                    <p>
-                    <input type="radio" value="xx" name="answer" required>
-                    <label>Fructose</label>
-                    </p>
+function getQuestionSentences(){
+    questionNumber += number
+    $('.question-form').append(`
+    <div class='boxes question-box'>
+            <form>
+                <legend>
+                    <h2>Question #<span class='question-${questionNumber}'>${questionNumber}</span></h2>
+                    <p class='question-sentence'>${STORE[number].question}</p>
+                </legend>
+            </form>
+            <button type="button" class="btn-style">Check My Answer</button>
+            </div>`)
+    getQuestionChoices()
+    console.log('getQuestion ran');
+};
 
-                    <p>
-                    <input type="radio" value="xx" name="answer" required>
-                    <label>Glucose</label>
-                    </p>
-
-                    <p>
-                    <input type="radio" value="xx" name="answer" required>
-                    <label>Cellulose</label>
-                    </p>
-                
-                    <button type="button" class="btn-style">Check My Answer</button>
-                </form>`)
+function getQuestionChoices(){
+    let choices = STORE[number].choices
+    choices.forEach(item=>
+         $('.question-sentence').append(`
+         <p>
+            <input type="radio" value="xx" name="answer" required>
+            <label>${item}</label>
+        </p>`)
     );
+};
+    // // <p>
+    // <input type="radio" value="xx" name="answer" required>
+    // <label>Fructose</label>
+    // </p>
+
+    // <p>
+    // <input type="radio" value="xx" name="answer" required>
+    // <label>Glucose</label>
+    // </p>
+
+    // <p>
+    // <input type="radio" value="xx" name="answer" required>
+    // <label>Cellulose</label>
+    // </p>
+
+    //
     // gets the question from the array and returns in HTML format
     // return html tags to append to .html file; use string template
     //consider
@@ -99,9 +116,7 @@ function getQuestion(){
     // $('#number').text(questionNumber)
 
     // $('#question-text').text(questionText)
-    // Add questions; consider forEach
-    console.log('getQuestion ran');
-};
+    // Add questions; consider forEach*/
 
 function quizPlay() {
     //call getQuestion
@@ -180,5 +195,6 @@ quizEnd()
 restart()
 */
 startQuiz()
-getQuestion()
+getQuestionSentences()
+
 
