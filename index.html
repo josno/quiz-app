@@ -39,6 +39,7 @@ Remove the 'hidden' class to view other elements -->
         
         <!-- This section should render when "Let's Start!" button is clicked -->
         <!-- This layout is an example of how it should render -->
+<<<<<<< HEAD
         <section> 
         <div class='boxes question-form hidden'>
             <form>
@@ -68,42 +69,63 @@ Remove the 'hidden' class to view other elements -->
                 <button type="button" class="btn-style">Check My Answer</button>
             </form>
         </div>
+||||||| merged common ancestors
+        <section class="question-form hidden"> 
+        <div class='boxes'>
+            <form>
+                <legend>
+                    <h2>
+                    <!-- Change depending on what question you're at -->
+                    <!-- change p tags to break tags -->
+                    <!-- look at adding span tags -->
+                    <p>Question #1</p>
+                    <p> What affects blood sugar?</p>
+                    </h2>
+                </legend>
+
+                <p>
+                <input type="radio" value="xx" name="answer" required>
+                <label>Fructose</label>
+                </p>
+
+                <p>
+                <input type="radio" value="xx" name="answer" required>
+                <label>Glucose</label>
+                </p>
+
+                <p>
+                <input type="radio" value="xx" name="answer" required>
+                <label>Cellulose</label>
+                </p>
+            
+                <button type="button" class="btn-style">Check My Answer</button>
+            </form>
+        </div>
+=======
+        <section class="question-form hidden"> 
+            <div class='boxes question-box'>
+                <form>
+                    <legend>
+                        <h2>Question #<span class='question-number'>1</span></h2>
+                        <p class='question-sentence'></p>
+                    </legend>
+                </form>
+                <button type="button" class="checkAnswer btn-style">Check My Answer</button>
+            </div>   
+>>>>>>> 645ab333e7ffdfba735be3411fb2a85548622b14
         </section>
 
         <!-- This section will render whenever the "Check Answer" button is clicked -->
         <section class="message-box hidden">
-            <div class='boxes'>
-                <!-- Different messages will display from message data depending on outcome -->
-                <h2>Wait A Moment!</h2>
-                <p>
-                    You forgot to pick an answer!
-                </p>
-                    
-                <button type="button" class="btn-style">Okay</button>
-            </div> 
+        <!-- Alert messages will render here -->
         </section>
 
         <!-- Render once all questions are answered -->
         <section class="game-end hidden">
-                <div class='boxes'>
-                    <!-- Game end confirmation will include message depending on the score -->
-                    <h2>Not gonna sugar coat it...</h2>
-                    <!-- show the tallie score -->
-                    <p>
-                        You scored 6 out of 10
-                    </p>
-                        
-                    <button type="button" class="btn-style">Do Over Please</button>
-                </div> 
-            </section>
+        </section>
         
         <!-- This will render once start button is pressed and will stay throughout the game -->
-        <footer class='score hidden'> 
-        <ul>
-            <li class='page'>Question x of 10</li>
-            <li class='questions-correct'>Correct:</li>
-            <li class='questions-incorrect'>Incorrect:</li>
-        </ul>
+        <footer class='score hidden'>    
         </footer>
     </main>
     

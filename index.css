@@ -1,10 +1,13 @@
 body {
+    background-image: url("https://imgur.com/oA7ar9h");
+    background-color: #F2357B;
     font-family: 'Roboto', Verdana, sans-serif;
 }
 
 /* styling for title; will stay on top of page
    margin-top to show background bleed through */
 h1 {
+    background-color: #65BFA6;
     width: 600px;
     font-family: 'Fredoka One', cursive;
     text-align: center;
@@ -23,6 +26,8 @@ h1 {
 
 /* Game play will render uniform size throughout quiz */
 .boxes {
+    background-color: #65BFA6;
+    height:500px;
     width: 600px;
     margin-left: auto;
     margin-right: auto;
@@ -31,8 +36,15 @@ h1 {
     align-items: center;
     flex-wrap: wrap;
     justify-content: space-evenly;
+<<<<<<< HEAD
     border: 2px solid black;
     text-align: center;
+||||||| merged common ancestors
+=======
+    -webkit-box-shadow: 14px 14px 10px -8px rgba(0,0,0,0.27);
+    -moz-box-shadow: 14px 14px 10px -8px rgba(0,0,0,0.27);
+    box-shadow: 14px 14px 10px -8px rgba(0,0,0,0.27);
+>>>>>>> 645ab333e7ffdfba735be3411fb2a85548622b14
 }
 
 /* Setting responsive design */
@@ -69,6 +81,7 @@ main {
 }
 
 footer {
+    background-color: #65BFA6;
     width: 600px;
     border: 2px solid black;
     margin-top: 20px;
