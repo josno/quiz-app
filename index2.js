@@ -55,37 +55,24 @@ const STORE = [
 let questionNumber = 1
 let counter = 0
 const countTo = 10
-let score = 0
+let score = 1
 
-function startQuiz() {
-// Button should start the quiz 
-// Hide the start
-    $('.intro').on('click', '.start-btn', function () {
-        $('.intro').toggleClass('hidden')
-        $('.question-form').toggleClass('hidden')
-        $('footer').toggleClass('hidden')
+function correctAnswerMessage() {
+    $(".message-box").html(`
+        <div class='boxes message'>
+        <!-- Different messages will display from message data depending on outcome -->
+            <h2>Good Job!</h2>
+            <p>You answered correctly!</p>
         
-    });
-    
-    console.log('startQuiz ran');
+            <button type="button" class="nxt-btn btn-style">Thanks! Next Question</button>
+        </div>`)
+
+    console.log('correctAnswerMessage ran')
 };
 
-function getQuestionSentences(){
-        $('.question-form').append(`
-        <div class='boxes question-box'>
-            <form>
-                <legend>
-                    <h2>Question #<span class='question-${questionNumber}'>${questionNumber}</span></h2>
-                    <p class='question-sentence'>${STORE[counter].question}</p>
-                </legend>
-            </form>
-            <button type="button" class="btn-style">Check My Answer</button>
-        </div>`)
-        getQuestionChoices()
-        console.log('getQuestion ran');
-    };
-    
-    
+function counterUp(){
+    counter++;
+}
 
 function getQuestionChoices(){
     let choices = STORE[counter].choices
@@ -99,90 +86,38 @@ function getQuestionChoices(){
 
 };
 
-function wrongAnswerMessage() {
-    $(".message-box").append(`
-        <div class='boxes'>
-        <!-- Different messages will display from message data depending on outcome -->
-            <h2>Whoops!</h2>
-            <p>Wrong answer! The correct answer was:</p>
-            <p>${STORE[counter].answer}</p>
-        
-            <button type="button" class="btn-style">Gotcha! Next Question</button>
-        </div>`)
-        //nextQuestion()
-    console.log('wrongAnswerMessage ran');
-};
+function getQuestionSentences(){
+        $('.question-number').text(questionNumber)
+        $('.question-sentence').text(STORE[counter].question)
+        getQuestionChoices()
+        console.log('getQuestion ran');
+    };
+    
+ 
+function nextButton() {
+    $('.question-form').on('click', '.btn-style', function () {
+        //checkAnswer() << needs a click toggle
+        counter ++
+        questionNumber ++
+        getQuestionSentences() 
+    })
 
-function correctAnswerMessage() {
-    $(".message-box").append(`
-        <div class='boxes'>
-        <!-- Different messages will display from message data depending on outcome -->
-            <h2>Good Job!</h2>
-            <p>You answered correctly!</p>
-        
-            <button type="button" class="nxt-btn btn-style">Thanks! Next Question</button>
-        </div>`)
-    console.log('correctAnswerMessage ran')
-};
+    
+    /*$('.message').on('click', '.nxt-btn', function () {
+        $('.message').toggleClass('hidden')
+        $('.question-form').toggleClass('hz\idden')
+        counter ++
+    });*/
+}
 
 function noAnswerMessage() {
-    $(".message-box").append(`
-        <div class='boxes'>
-        <!-- Different messages will display from message data depending on outcome -->
+    $(".message-box").html(`
+        <div class='boxes message'>
             <h2>Wait A Moment!</h2>
             <p>You forgot to pick an answer! Go back and pick one.</p>
-        
             <button type="button" class="btn-style">Okay</button>
         </div>`)
-        //StayOnQuestion()
     console.log('noAnswerMessage ran');
-};
-
-function StayOnQuestion() {
-    //stay on question
-    console.log('moveOrStay ran');
-};
-
-function nextQuestion() {
-    $('.message-box').on('click', '.nxt-btn', function () {
-        $('.question-form').remove()
-        toggleMessage()
-    });
-    getQuestionSentences()
-}
-
-function toggleMessage(){
-    $('.question-form').toggleClass('hidden')
-    $('.message-box').toggleClass('hidden')
-}
-
-function submitAnswer() {
-    $('.question-form').on('click', '.btn-style', function () {
-        let chosenAnswer = $("[type='radio']:checked").val()
-
-        if (chosenAnswer === STORE[counter].answer){
-            toggleMessage()
-            correctAnswerMessage()
-        } else if (chosenAnswer === undefined){
-            noAnswerMessage()
-        }else if (chosenAnswer !== STORE[counter].answer) {
-            toggleMessage()
-            wrongAnswerMessage()
-        } 
-    });
-    console.log('submitAnswer ran');
-};
-
-function scoreboard() {
-    $('main').append(`   
-    <footer class='score hidden'>    
-        <ul>
-            <li class='page'>Question ${questionNumber} of 10</li>
-            <li class='questions-correct'>Correct: ${score}</li>
-            <li class='questions-incorrect'>Incorrect:</li>
-        </ul>
-    </footer>  `)
-    console.log('scoreboard ran');
 };
 
 function quizEnd() {
@@ -196,6 +131,63 @@ function restart() {
     // When button is click, restarts the quiz
     console.log('restart ran');
 };
+
+function scoreboard() {
+    $('.page').text('Correct' + score )
+    console.log('scoreboard ran');
+};
+
+function startQuiz() {
+    // Button should start the quiz 
+    // Hide the start
+        $('.intro').on('click', '.start-btn', function () {
+            $('.intro').toggleClass('hidden')
+            $('.question-form').toggleClass('hidden')
+            $('footer').toggleClass('hidden')
+        });
+        
+        console.log('startQuiz ran');
+    };
+
+function stayOnQuestion() {
+    //stay on question
+    console.log('moveOrStay ran');
+};
+
+
+function checkAnswer() {
+    let chosenAnswer = $("[type='radio']:checked").val()
+
+    if (chosenAnswer === STORE[counter].answer){
+        toggleMessage()
+        correctAnswerMessage()
+    } else if (chosenAnswer === false){
+        noAnswerMessage()
+    }else if (chosenAnswer !== STORE[counter].answer) {
+        toggleMessage()
+        wrongAnswerMessage()
+    } 
+    console.log('checkAnswer ran');
+};
+
+function toggleMessage(){
+    $('.question-form').toggleClass('hidden')
+    $('.message-box').toggleClass('hidden')
+}
+
+function wrongAnswerMessage() {
+    $(".message-box").html(`
+        <div class='boxes message'>
+        <!-- Different messages will display from message data depending on outcome -->
+            <h2>Whoops!</h2>
+            <p>Wrong answer! The correct answer was:</p>
+            <p>${STORE[counter].answer}</p>
+        
+            <button type="button" class="nxt-btn btn-style">Gotcha! Next Question</button>
+        </div>`)
+    console.log('wrongAnswerMessage ran');
+};
+
 
 /*
 startQuiz()
@@ -213,9 +205,8 @@ quizEnd()
 restart()
 */
 startQuiz()
-scoreboard()
 getQuestionSentences()
-submitAnswer()
+nextButton()
 
 
 

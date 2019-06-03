@@ -39,6 +39,15 @@ Remove the 'hidden' class to view other elements -->
         <!-- This section should render when "Let's Start!" button is clicked -->
         <!-- This layout is an example of how it should render -->
         <section class="question-form hidden"> 
+            <div class='boxes question-box'>
+                <form>
+                    <legend>
+                        <h2>Question #<span class='question-number'>1</span></h2>
+                        <p class='question-sentence'></p>
+                    </legend>
+                </form>
+                <button type="button" class="btn-style">Check My Answer</button>
+            </div>   
         </section>
 
         <!-- This section will render whenever the "Check Answer" button is clicked -->
@@ -61,7 +70,13 @@ Remove the 'hidden' class to view other elements -->
             </section>
         
         <!-- This will render once start button is pressed and will stay throughout the game -->
-        
+        <footer class='score'>    
+                <ul>
+                    <li class='page'></li>
+                    <li class='questions-correct'></li>
+                    <li class='questions-incorrect'></li>
+                </ul>
+            </footer>
     </main>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
