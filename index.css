@@ -36,15 +36,11 @@ h1 {
     align-items: center;
     flex-wrap: wrap;
     justify-content: space-evenly;
-<<<<<<< HEAD
     border: 2px solid black;
     text-align: center;
-||||||| merged common ancestors
-=======
     -webkit-box-shadow: 14px 14px 10px -8px rgba(0,0,0,0.27);
     -moz-box-shadow: 14px 14px 10px -8px rgba(0,0,0,0.27);
     box-shadow: 14px 14px 10px -8px rgba(0,0,0,0.27);
->>>>>>> 645ab333e7ffdfba735be3411fb2a85548622b14
 }
 
 /* Setting responsive design */
