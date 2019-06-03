@@ -52,10 +52,12 @@ const STORE = [
 
 ];
 
-let questionNumber = 1
+
 let counter = 0
+let questionNumber = counter + 1
 const countTo = 10
-let score = 1
+let points = 0
+let errors = 0
 
 function correctAnswerMessage() {
     $(".message-box").html(`
@@ -66,6 +68,7 @@ function correctAnswerMessage() {
         
             <button type="button" class="nxt-btn btn-style">Thanks! Next Question</button>
         </div>`)
+    
 
     console.log('correctAnswerMessage ran')
 };
@@ -100,6 +103,7 @@ function nextButton() {
         counter ++
         questionNumber ++
         getQuestionSentences() 
+        scoreboard()
     })
 
     
@@ -133,7 +137,13 @@ function restart() {
 };
 
 function scoreboard() {
-    $('.page').text('Correct' + score )
+    $('.score').html(`
+        <ul>
+        <li class='page'>Question ${questionNumber} of 10</li>
+        <li class='questions-correct'>Correct: ${points}</li>
+        <li class='questions-incorrect'>Incorrect: ${errors}</li>
+        </ul>
+    `)
     console.log('scoreboard ran');
 };
 
@@ -141,9 +151,9 @@ function startQuiz() {
     // Button should start the quiz 
     // Hide the start
         $('.intro').on('click', '.start-btn', function () {
-            $('.intro').toggleClass('hidden')
-            $('.question-form').toggleClass('hidden')
-            $('footer').toggleClass('hidden')
+            $('.intro').hide()
+            $('.question-form').show()
+            $('footer').show()
         });
         
         console.log('startQuiz ran');
@@ -207,6 +217,6 @@ restart()
 startQuiz()
 getQuestionSentences()
 nextButton()
-
+scoreboard()
 
 
