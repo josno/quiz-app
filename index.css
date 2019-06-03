@@ -1,10 +1,13 @@
 body {
+    background-image: url("https://imgur.com/oA7ar9h");
+    background-color: #F2357B;
     font-family: 'Roboto', Verdana, sans-serif;
 }
 
 /* styling for title; will stay on top of page
    margin-top to show background bleed through */
 h1 {
+    background-color: #65BFA6;
     width: 600px;
     font-family: 'Fredoka One', cursive;
     text-align: center;
@@ -23,6 +26,7 @@ h1 {
 
 /* Game play will render uniform size throughout quiz */
 .boxes {
+    background-color: #65BFA6;
     height:500px;
     width: 600px;
     margin-left: auto;
@@ -32,6 +36,9 @@ h1 {
     align-items: center;
     flex-wrap: wrap;
     justify-content: space-evenly;
+    -webkit-box-shadow: 14px 14px 10px -8px rgba(0,0,0,0.27);
+    -moz-box-shadow: 14px 14px 10px -8px rgba(0,0,0,0.27);
+    box-shadow: 14px 14px 10px -8px rgba(0,0,0,0.27);
 }
 
 /* Setting responsive design */
@@ -75,6 +82,7 @@ div.boxes {
 }
 
 footer {
+    background-color: #65BFA6;
     width: 600px;
     border: 2px solid black;
     margin-top: 20px;
