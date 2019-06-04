@@ -52,136 +52,19 @@ const STORE = [
 
 ];
 
-const objState = {
-    counter : 0,
-    questionNumber : counter + 1, 
-    countTo: 10,
-    points: 0,
-    errors: 0,
-}
+// const objState = {
+//     counter : 0,
+//     questionNumber : counter + 1, 
+//     countTo: 10,
+//     points: 0,git 
+//     errors: 0,
+// }
 
-
-function checkAnswer() {
-    let chosenAnswer = $("[type='radio']:checked").val()
-    
-    if (chosenAnswer === undefined){
-        noAnswerMessage()
-    } else if (chosenAnswer === STORE[counter].answer){
-        correctAnswerMessage()
-        points ++
-    } else if (chosenAnswer !== STORE[counter].answer) {
-        wrongAnswerMessage()
-        errors ++
-    }
-
-    scoreboard()//take points errors and questionnumber as argument
-    $('question-form').hide()
-    $('.message-box').show()
-    console.log('checkAnswer ran');
-};
-
-/*Should I put this and checkAnswer together
-Make button submit type and do prevent default to top render question Number ahead?*/
-function checkButton() {
-    $('.question-form').on('click', '.checkAnswer', function () {
-        checkAnswer()
-        $('.question-form').hide()
-    })
-}
-
-function correctAnswerMessage() {
-    $(".message-box").html(`
-        <div class='boxes message'>
-        <!-- Different messages will display from message data depending on outcome -->
-            <h2>Good Job!</h2>
-            <p>You answered correctly!</p>
-        
-            <button type="button" class="nxtQuestion btn-style">Thanks! Next Question</button>
-        </div>`)
-    console.log('correctAnswerMessage ran')
-};
-
-
-function getQuestionChoices(objState){ //pass counter variable as argument
-    let choices = STORE[objState.counter].choices
-    choices.forEach(item=>
-         $('.question-sentence').append(`
-            <p>
-            <input type="radio" name="question-choice" value="${item}" required>
-            <label for="option-${item}">${item}</label>
-            </p>`)
-    );
-
-};
-
-function getQuestionSentences(){
-        $('.question-number').text(objStatequestionNumber)
-        $('.question-sentence').text(STORE[objState.counter].question)
-        getQuestionChoices()
-        console.log('getQuestion ran');
-    };
-    
- 
-// function nextButton() {
-    $('.message-box').on('click', '.nxtQuestion', function () {
-        if (questionNumber === countTo){
-            quizEnd()
-            $('.message-box').hide()
-            $('footer').hide()
-        } else {
-            $('.message-box').hide()
-            $('.question-form').show()
-            
-            counter ++ // I don't think I put this in the right place
-            questionNumber ++ // I don't think I put this in the right place
-            getQuestionSentences()
-        } 
-    })
-}
-
-function checkButton() {
-    $('.question-form').on('click', '.checkAnswer', function () {
-        checkAnswer()
-        $('.question-form').hide()
-    })
-}
-
-
-function noAnswerMessage() {
-    $(".message-box").html(`
-        <div class='boxes message'>
-            <h2>Wait A Moment!</h2>
-            <p>You forgot to pick an answer! Go back and pick one.</p>
-            <button type="button" class="stay btn-style">Okay</button>
-        </div>`)
-    console.log('noAnswerMessage ran');
-};
-
-function quizEnd() {
-    $('.game-end').show()
-    $('.game-end').html(`
-        <div class='boxes'>
-            <h2>You scored ${points} out of ${questionNumber}</h2>
-            <button type="button" class="restart btn-style">Do Over Please</button>
-        </div>
-    `)
-    $('.restart').on('click', function () {
-        document.location.reload();
-    })
-    console.log('quizEnd ran');
-};
-
-
-function scoreboard() {
-    $('.score').html(`
-        <ul>
-        <li class='page'>Question ${questionNumber} of 10</li>
-        <li class='questions-correct'>Correct: ${points}</li>
-        <li class='questions-incorrect'>Incorrect: ${errors}</li>
-        </ul>
-    `)
-    console.log('scoreboard ran');
-};
+let counter = 0
+let questionNumber = 1 
+let countTo = 0
+let points = 0 
+let errors = 0
 
 function startQuiz() {
     // Button should start the quiz 
@@ -193,16 +76,23 @@ function startQuiz() {
         });
         scoreboard()
         console.log('startQuiz ran');
-    };
-
-function stayOnQuestion() {
-    $('.message-box').on('click', '.stay', function () {
-        $('.message-box').hide()
-        $('.question-form').show()
-    })
-    console.log('Stay ran');
 };
 
+//Template for the scoreboard on start quiz
+function scoreboard() {
+    $('.score').html(`
+        <ul>
+        <li class='page'>Question ${questionNumber} of 10</li>
+        <li class='questions-correct'>Correct: ${points}</li>
+        <li class='questions-incorrect'>Incorrect: ${errors}</li>
+        </ul>
+    `)
+    console.log('scoreboard ran');
+};
+
+
+/*This function checks the user answer against
+the actual answer and will run then return the appropriate message */
 
 function checkAnswer() {
     let chosenAnswer = $("[type='radio']:checked").val()
@@ -223,6 +113,30 @@ function checkAnswer() {
     console.log('checkAnswer ran');
 };
 
+/* The following three messages will render depending on the answer 
+the user chose */
+
+function correctAnswerMessage() {
+    $(".message-box").html(`
+        <div class='boxes message'>
+        <!-- Different messages will display from message data depending on outcome -->
+            <h2>Good Job!</h2>
+            <p>You answered correctly!</p>
+        
+            <button type="button" class="nxtQuestion btn-style">Thanks! Next Question</button>
+        </div>`)
+    console.log('correctAnswerMessage ran')
+};
+
+function noAnswerMessage() {
+    $(".message-box").html(`
+        <div class='boxes message'>
+            <h2>Wait A Moment!</h2>
+            <p>You forgot to pick an answer! Go back and pick one.</p>
+            <button type="button" class="stay btn-style">Okay</button>
+        </div>`)
+    console.log('noAnswerMessage ran');
+};
 
 function wrongAnswerMessage() {
     $(".message-box").html(`
@@ -238,10 +152,71 @@ function wrongAnswerMessage() {
 };
 
 
-startQuiz()
-getQuestionSentences()
-nextButton()
-checkButton()
-stayOnQuestion()
+//Renders the questions to the DOM
+function setQuestion(){
+    let choices = STORE[counter].choices
+    $('.question-number').text(questionNumber)
+    $('.question-sentence').text(STORE[counter].question)
+
+    //interator for question choices
+    choices.forEach(item=>
+         $('.question-sentence').append(`
+            <p>
+            <input type="radio" name="question-choice" value="${item}" required>
+            <label for="option-${item}">${item}</label>
+            </p>`)
+    );
+
+    console.log('setQuestion ran');
+};    
+
+//Renders the final message to the DOM
+function quizEnd() {
+    $('.game-end').show()
+    $('.game-end').html(`
+        <div class='boxes'>
+            <h2>You scored ${points} out of ${questionNumber}</h2>
+            <button type="button" class="restart btn-style">Do Over Please</button>
+        </div>
+    `)
+    console.log('quizEnd ran');
+};
+
+/*Event Listeners for message alerts and 
+quiz restart*/
+
+// calls on checkAnswer function to determine which message to show
+$('.question-form').on('click', '.checkAnswer', function () {
+    checkAnswer()
+    $('.question-form').hide()
+})
+
+//stays on previous question until user makes a choice
+$('.message-box').on('click', '.stay', function () {
+    $('.message-box').hide()
+    $('.question-form').show()
+});
+
+//moves on to the next question *after* the alert message
+$('.message-box').on('click', '.nxtQuestion', function () {
+    questionNumber ++
+    scoreboard()
+
+    if (questionNumber === countTo){
+        quizEnd()
+        $('.message-box').hide()
+        $('footer').hide()
+    } else {
+        $('.message-box').hide()
+        counter ++
+        $('.question-form').show()
+        setQuestion()
+    } 
+});
+
+//restarts quiz ; reloads to the beginning
+$('.restart').on('click', function () {
+    document.location.reload();
+})
 
 
