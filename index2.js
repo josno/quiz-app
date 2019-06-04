@@ -92,6 +92,7 @@ function checkButton() {
 function correctAnswerMessage() {
     $(".message-box").html(`
         <div class='boxes message'>
+        <!-- Different messages will display from message data depending on outcome -->
             <h2>Good Job!</h2>
             <p>You answered correctly!</p>
         
@@ -138,13 +139,19 @@ function getQuestionSentences(){
     })
 }
 
+function checkButton() {
+    $('.question-form').on('click', '.checkAnswer', function () {
+        checkAnswer()
+        $('.question-form').hide()
+    })
+}
+
 
 function noAnswerMessage() {
     $(".message-box").html(`
         <div class='boxes message'>
             <h2>Wait A Moment!</h2>
             <p>You forgot to pick an answer! Go back and pick one.</p>
-
             <button type="button" class="stay btn-style">Okay</button>
         </div>`)
     console.log('noAnswerMessage ran');
@@ -155,7 +162,6 @@ function quizEnd() {
     $('.game-end').html(`
         <div class='boxes'>
             <h2>You scored ${points} out of ${questionNumber}</h2>
-
             <button type="button" class="restart btn-style">Do Over Please</button>
         </div>
     `)
@@ -185,7 +191,7 @@ function startQuiz() {
             $('.question-form').show()
             $('footer').show()
         });
-        scoreboard() //Better place to render scoreboard?
+        scoreboard()
         console.log('startQuiz ran');
     };
 
@@ -196,6 +202,27 @@ function stayOnQuestion() {
     })
     console.log('Stay ran');
 };
+
+
+function checkAnswer() {
+    let chosenAnswer = $("[type='radio']:checked").val()
+    
+    if (chosenAnswer === undefined){
+        noAnswerMessage()
+    } else if (chosenAnswer === STORE[counter].answer){
+        correctAnswerMessage()
+        points ++
+    } else if (chosenAnswer !== STORE[counter].answer) {
+        wrongAnswerMessage()
+        errors ++
+    }
+
+    scoreboard()
+    $('question-form').hide()
+    $('.message-box').show()
+    console.log('checkAnswer ran');
+};
+
 
 function wrongAnswerMessage() {
     $(".message-box").html(`
@@ -210,15 +237,11 @@ function wrongAnswerMessage() {
     console.log('wrongAnswerMessage ran');
 };
 
-function quizPlay(){
-    startQuiz()
-    getQuestionSentences()
-    nextButton()
-    checkButton()
-    stayOnQuestion()
-};
 
-$(quizPlay);
-    
+startQuiz()
+getQuestionSentences()
+nextButton()
+checkButton()
+stayOnQuestion()
 
 
