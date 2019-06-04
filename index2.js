@@ -52,12 +52,14 @@ const STORE = [
 
 ];
 
+const objState = {
+    counter : 0,
+    questionNumber : counter + 1, 
+    countTo: 10,
+    points: 0,
+    errors: 0,
+}
 
-let counter = 0
-let questionNumber = counter + 1
-const countTo = 10
-let points = 0
-let errors = 0
 
 function checkAnswer() {
     let chosenAnswer = $("[type='radio']:checked").val()
@@ -72,7 +74,7 @@ function checkAnswer() {
         errors ++
     }
 
-    scoreboard()
+    scoreboard()//take points errors and questionnumber as argument
     $('question-form').hide()
     $('.message-box').show()
     console.log('checkAnswer ran');
@@ -99,8 +101,8 @@ function correctAnswerMessage() {
 };
 
 
-function getQuestionChoices(){
-    let choices = STORE[counter].choices
+function getQuestionChoices(objState){ //pass counter variable as argument
+    let choices = STORE[objState.counter].choices
     choices.forEach(item=>
          $('.question-sentence').append(`
             <p>
@@ -112,14 +114,14 @@ function getQuestionChoices(){
 };
 
 function getQuestionSentences(){
-        $('.question-number').text(questionNumber)
-        $('.question-sentence').text(STORE[counter].question)
+        $('.question-number').text(objStatequestionNumber)
+        $('.question-sentence').text(STORE[objState.counter].question)
         getQuestionChoices()
         console.log('getQuestion ran');
     };
     
  
-function nextButton() {
+// function nextButton() {
     $('.message-box').on('click', '.nxtQuestion', function () {
         if (questionNumber === countTo){
             quizEnd()
@@ -128,10 +130,10 @@ function nextButton() {
         } else {
             $('.message-box').hide()
             $('.question-form').show()
-            getQuestionSentences()
+            
             counter ++ // I don't think I put this in the right place
             questionNumber ++ // I don't think I put this in the right place
-            
+            getQuestionSentences()
         } 
     })
 }
