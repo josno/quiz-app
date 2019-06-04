@@ -59,10 +59,37 @@ const countTo = 10
 let points = 0
 let errors = 0
 
+function checkAnswer() {
+    let chosenAnswer = $("[type='radio']:checked").val()
+    
+    if (chosenAnswer === undefined){
+        noAnswerMessage()
+    } else if (chosenAnswer === STORE[counter].answer){
+        correctAnswerMessage()
+        points ++
+    } else if (chosenAnswer !== STORE[counter].answer) {
+        wrongAnswerMessage()
+        errors ++
+    }
+
+    scoreboard()
+    $('question-form').hide()
+    $('.message-box').show()
+    console.log('checkAnswer ran');
+};
+
+/*Should I put this and checkAnswer together
+Make button submit type and do prevent default to top render question Number ahead?*/
+function checkButton() {
+    $('.question-form').on('click', '.checkAnswer', function () {
+        checkAnswer()
+        $('.question-form').hide()
+    })
+}
+
 function correctAnswerMessage() {
     $(".message-box").html(`
         <div class='boxes message'>
-        <!-- Different messages will display from message data depending on outcome -->
             <h2>Good Job!</h2>
             <p>You answered correctly!</p>
         
@@ -99,19 +126,13 @@ function nextButton() {
             $('.message-box').hide()
             $('footer').hide()
         } else {
-        $('.message-box').hide()
-        $('.question-form').show()
-        counter ++
-        questionNumber ++
-        getQuestionSentences()
+            $('.message-box').hide()
+            $('.question-form').show()
+            getQuestionSentences()
+            counter ++ // I don't think I put this in the right place
+            questionNumber ++ // I don't think I put this in the right place
+            
         } 
-    })
-}
-
-function checkButton() {
-    $('.question-form').on('click', '.checkAnswer', function () {
-        checkAnswer()
-        $('.question-form').hide()
     })
 }
 
@@ -121,6 +142,7 @@ function noAnswerMessage() {
         <div class='boxes message'>
             <h2>Wait A Moment!</h2>
             <p>You forgot to pick an answer! Go back and pick one.</p>
+
             <button type="button" class="stay btn-style">Okay</button>
         </div>`)
     console.log('noAnswerMessage ran');
@@ -131,6 +153,7 @@ function quizEnd() {
     $('.game-end').html(`
         <div class='boxes'>
             <h2>You scored ${points} out of ${questionNumber}</h2>
+
             <button type="button" class="restart btn-style">Do Over Please</button>
         </div>
     `)
@@ -160,7 +183,7 @@ function startQuiz() {
             $('.question-form').show()
             $('footer').show()
         });
-        scoreboard()
+        scoreboard() //Better place to render scoreboard?
         console.log('startQuiz ran');
     };
 
@@ -171,27 +194,6 @@ function stayOnQuestion() {
     })
     console.log('Stay ran');
 };
-
-
-function checkAnswer() {
-    let chosenAnswer = $("[type='radio']:checked").val()
-    
-    if (chosenAnswer === undefined){
-        noAnswerMessage()
-    } else if (chosenAnswer === STORE[counter].answer){
-        correctAnswerMessage()
-        points ++
-    } else if (chosenAnswer !== STORE[counter].answer) {
-        wrongAnswerMessage()
-        errors ++
-    }
-
-    scoreboard()
-    $('question-form').hide()
-    $('.message-box').show()
-    console.log('checkAnswer ran');
-};
-
 
 function wrongAnswerMessage() {
     $(".message-box").html(`
@@ -206,11 +208,15 @@ function wrongAnswerMessage() {
     console.log('wrongAnswerMessage ran');
 };
 
+function quizPlay(){
+    startQuiz()
+    getQuestionSentences()
+    nextButton()
+    checkButton()
+    stayOnQuestion()
+};
 
-startQuiz()
-getQuestionSentences()
-nextButton()
-checkButton()
-stayOnQuestion()
+$(quizPlay);
+    
 
 
