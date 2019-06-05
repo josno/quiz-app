@@ -53,7 +53,7 @@ const STORE = [
 ];
 
 const objState = {
-    counter: 0,
+    counter: 2,
     questionNumber: 1, 
     countTo: 10,
     points: 0,
@@ -65,37 +65,37 @@ quiz restart*/
 
 // calls on checkAnswer function to determine which message to show
 $('.question-form').on('click', '.checkAnswer', function () {
-    checkAnswer()
+    checkAnswer(objState)
     $('.question-form').hide()
 })
 
 //stays on previous question until user makes a choice
-$('.message-box').on('click', '.stay', function () {
-    $('.message-box').hide()
-    $('.question-form').show()
-});
+// $('.message-box').on('click', '.stay', function () {
+//     $('.message-box').hide()
+//     $('.question-form').show()
+// });
 
 //moves on to the next question *after* the alert message
-$('.message-box').on('click', '.nxtQuestion', function () {
-    questionNumber ++
-    // scoreboard()
+// $('.message-box').on('click', '.nxtQuestion', function () {
+//     questionNumber ++
+//     // scoreboard()
 
-    if (questionNumber === countTo){
-        endQuiz()
-        $('.message-box').hide()
-        $('footer').hide()
-    } else {
-        $('.message-box').hide()
-        counter ++
-        $('.question-form').show()
-        setQuestion(objState)
-    } 
-});
+//     if (questionNumber === countTo){
+//         endQuiz()
+//         $('.message-box').hide()
+//         $('footer').hide()
+//     } else {
+//         $('.message-box').hide()
+//         counter ++
+//         $('.question-form').show()
+//         setQuestion(objState)
+//     } 
+// });
 
 //restarts quiz ; reloads to the beginning
-$('.restart').on('click', function () {
-    document.location.reload();
-})
+// $('.restart').on('click', function () {
+//     document.location.reload();
+// })
 
 function startQuiz() {
     // Button should start the quiz 
@@ -106,6 +106,7 @@ function startQuiz() {
             $('footer').show()
         });
         // scoreboard()
+        setQuestion(objState)
         console.log('startQuiz ran');
 };
 
@@ -125,24 +126,27 @@ function startQuiz() {
 /*This function checks the user answer against
 the actual answer and will run then return the appropriate message */
 
-// function checkAnswer() {
-//     let chosenAnswer = $("[type='radio']:checked").val()
+function checkAnswer(obj) {
+    let chosenAnswer = $("[type='radio']:checked").val()
     
-//     if (chosenAnswer === undefined){
-//         noAnswerMessage()
-//     } else if (chosenAnswer === STORE[counter].answer){
-//         correctAnswerMessage()
-//         points ++
-//     } else if (chosenAnswer !== STORE[counter].answer) {
-//         wrongAnswerMessage(counter)
-//         errors ++
-//     }
+    if (chosenAnswer === undefined){
+        noAnswerMessage()
+        $('.message-box').show()      
+    } else if (chosenAnswer === STORE[obj.counter].answer){
+        correctAnswerMessage()
+        $('.message-box').show()
+        return obj.points = obj.points + 1
+    } else if (chosenAnswer !== STORE[obj.counter].answer) {
+        wrongAnswerMessage(objState)
+        $('.message-box').show()
+        return obj.errors = obj.errors + 1
+    }
 
-//     // scoreboard()
-//     $('question-form').hide()
-//     $('.message-box').show()
-//     console.log('checkAnswer ran');
-// };
+    // scoreboard()
+    
+    $('question-form').hide()
+    console.log('checkAnswer ran');
+};
 
 /* The following three messages will render depending on the answer 
 the user chose */
@@ -168,16 +172,19 @@ function noAnswerMessage() {
     console.log('noAnswerMessage ran');
 };
 
-function wrongAnswerMessage(counter) {
+function wrongAnswerMessage(obj) {
+    let correctChoice = STORE[obj.counter].answer
+    
     $(".message-box").html(`
         <div class='boxes message'>
         <!-- Different messages will display from message data depending on outcome -->
             <h2>Whoops!</h2>
-            <p>Wrong answer! The correct answer was:</p>
-            <p>${STORE[counter].answer}</p>
+            <p>Wrong answer! The correct answer was: </p>
+            <p>${correctChoice}</span></p>
         
             <button type="button" class="nxtQuestion btn-style">Gotcha! Next Question</button>
         </div>`)
+
     console.log('wrongAnswerMessage ran');
 };
 
@@ -185,7 +192,7 @@ function wrongAnswerMessage(counter) {
 //Renders the questions to the DOM
 function setQuestion(obj){
     let choices = STORE[obj.counter].choices
-    $('.question-number').text(obj.questionNumber)
+    $('.question-number').text(obj.counter + 1)
     $('.question-sentence').text(STORE[obj.counter].question)
 
     //interator for question choices
@@ -196,24 +203,28 @@ function setQuestion(obj){
             <label for="option-${item}">${item}</label>
             </p>`)
     );
+};
 
-    console.log('setQuestion ran');
+function increaseCounter(obj) {
+    return obj.counter = obj.counter + 1;
 };
 
 //Renders the final message to the DOM
-function endQuiz() {
-    $('.game-end').show()
-    $('.game-end').html(`
-        <div class='boxes'>
-            <h2>You scored ${points} out of ${questionNumber}</h2>
-            <button type="button" class="restart btn-style">Do Over Please</button>
-        </div>
-    `)
-    console.log('endQuiz ran');
-};
+// function endQuiz() {
+//     $('.game-end').show()
+//     $('.game-end').html(`
+//         <div class='boxes'>
+//             <h2>You scored ${points} out of ${questionNumber}</h2>
+//             <button type="button" class="restart btn-style">Do Over Please</button>
+//         </div>
+//     `)
+//     console.log('endQuiz ran');
+// };
 
 
 startQuiz()
 setQuestion(objState)
+
+
 
 
