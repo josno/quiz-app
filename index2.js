@@ -53,7 +53,7 @@ const STORE = [
 ];
 
 const objState = {
-    counter: 2,
+    counter: 0,
     questionNumber: 1, 
     countTo: 10,
     points: 0,
@@ -70,48 +70,47 @@ $('.question-form').on('click', '.checkAnswer', function () {
 })
 
 //stays on previous question until user makes a choice
-// $('.message-box').on('click', '.stay', function () {
-//     $('.message-box').hide()
-//     $('.question-form').show()
-// });
+$('.message-box').on('click', '.stay', function () {
+    $('.message-box').hide()
+    $('.question-form').show()
+});
 
 //moves on to the next question *after* the alert message
-// $('.message-box').on('click', '.nxtQuestion', function () {
-//     questionNumber ++
-//     // scoreboard()
+$('.message-box').on('click', '.nxtQuestion', function () {
+    // scoreboard()
 
-//     if (questionNumber === countTo){
-//         endQuiz()
-//         $('.message-box').hide()
-//         $('footer').hide()
-//     } else {
-//         $('.message-box').hide()
-//         counter ++
-//         $('.question-form').show()
-//         setQuestion(objState)
-//     } 
-// });
+    if (objState.questionNumber === objState.countTo){
+        endQuiz()
+        $('.message-box').hide()
+        $('footer').hide()
+    } else {
+        $('.message-box').hide()
+        objState['counter']++
+        setQuestion(objState)   
+        $('.question-form').show()
+    }      
+});
 
 //restarts quiz ; reloads to the beginning
-// $('.restart').on('click', function () {
-//     document.location.reload();
-// })
+$('.restart').on('click', function () {
+    document.location.reload();
+})
 
 function startQuiz() {
     // Button should start the quiz 
     // Hide the start
-        $('.intro').on('click', '.start-btn', function () {
-            $('.intro').hide()
-            $('.question-form').show()
-            $('footer').show()
-        });
+    $('.intro').on('click', '.start-btn', function () {
+        $('.intro').hide()
+        $('.question-form').show()
+        $('footer').show()
+    });
         // scoreboard()
-        setQuestion(objState)
-        console.log('startQuiz ran');
+    setQuestion(objState)
+    console.log('startQuiz ran');
 };
 
 //Template for the scoreboard on start quiz
-// function scoreboard() {
+// function renderScoreboard() {
 //     $('.score').html(`
 //         <ul>
 //         <li class='page'>Question ${questionNumber} of 10</li>
@@ -135,15 +134,13 @@ function checkAnswer(obj) {
     } else if (chosenAnswer === STORE[obj.counter].answer){
         correctAnswerMessage()
         $('.message-box').show()
-        return obj.points = obj.points + 1
+        obj["points"] ++
     } else if (chosenAnswer !== STORE[obj.counter].answer) {
         wrongAnswerMessage(objState)
         $('.message-box').show()
-        return obj.errors = obj.errors + 1
+        obj["errors"] ++
     }
 
-    // scoreboard()
-    
     $('question-form').hide()
     console.log('checkAnswer ran');
 };
@@ -190,7 +187,7 @@ function wrongAnswerMessage(obj) {
 
 
 //Renders the questions to the DOM
-function setQuestion(obj){
+function setQuestion(obj, index){
     let choices = STORE[obj.counter].choices
     $('.question-number').text(obj.counter + 1)
     $('.question-sentence').text(STORE[obj.counter].question)
@@ -203,10 +200,6 @@ function setQuestion(obj){
             <label for="option-${item}">${item}</label>
             </p>`)
     );
-};
-
-function increaseCounter(obj) {
-    return obj.counter = obj.counter + 1;
 };
 
 //Renders the final message to the DOM
@@ -224,6 +217,7 @@ function increaseCounter(obj) {
 
 startQuiz()
 setQuestion(objState)
+// scoreboard()
 
 
 
