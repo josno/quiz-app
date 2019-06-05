@@ -66,6 +66,43 @@ let countTo = 0
 let points = 0 
 let errors = 0
 
+/*Event Listeners for message alerts and 
+quiz restart*/
+
+// calls on checkAnswer function to determine which message to show
+$('.question-form').on('click', '.checkAnswer', function () {
+    checkAnswer()
+    $('.question-form').hide()
+})
+
+//stays on previous question until user makes a choice
+$('.message-box').on('click', '.stay', function () {
+    $('.message-box').hide()
+    $('.question-form').show()
+});
+
+//moves on to the next question *after* the alert message
+$('.message-box').on('click', '.nxtQuestion', function () {
+    questionNumber ++
+    scoreboard()
+
+    if (questionNumber === countTo){
+        quizEnd()
+        $('.message-box').hide()
+        $('footer').hide()
+    } else {
+        $('.message-box').hide()
+        counter ++
+        $('.question-form').show()
+        setQuestion()
+    } 
+});
+
+//restarts quiz ; reloads to the beginning
+$('.restart').on('click', function () {
+    document.location.reload();
+})
+
 function startQuiz() {
     // Button should start the quiz 
     // Hide the start
@@ -182,41 +219,8 @@ function quizEnd() {
     console.log('quizEnd ran');
 };
 
-/*Event Listeners for message alerts and 
-quiz restart*/
 
-// calls on checkAnswer function to determine which message to show
-$('.question-form').on('click', '.checkAnswer', function () {
-    checkAnswer()
-    $('.question-form').hide()
-})
-
-//stays on previous question until user makes a choice
-$('.message-box').on('click', '.stay', function () {
-    $('.message-box').hide()
-    $('.question-form').show()
-});
-
-//moves on to the next question *after* the alert message
-$('.message-box').on('click', '.nxtQuestion', function () {
-    questionNumber ++
-    scoreboard()
-
-    if (questionNumber === countTo){
-        quizEnd()
-        $('.message-box').hide()
-        $('footer').hide()
-    } else {
-        $('.message-box').hide()
-        counter ++
-        $('.question-form').show()
-        setQuestion()
-    } 
-});
-
-//restarts quiz ; reloads to the beginning
-$('.restart').on('click', function () {
-    document.location.reload();
-})
+startQuiz()
+setQuestion()
 
 
