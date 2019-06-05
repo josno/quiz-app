@@ -87,7 +87,7 @@ $('.message-box').on('click', '.nxtQuestion', function () {
     scoreboard()
 
     if (questionNumber === countTo){
-        quizEnd()
+        endQuiz()
         $('.message-box').hide()
         $('footer').hide()
     } else {
@@ -140,7 +140,7 @@ function checkAnswer() {
         correctAnswerMessage()
         points ++
     } else if (chosenAnswer !== STORE[counter].answer) {
-        wrongAnswerMessage()
+        wrongAnswerMessage(counter)
         errors ++
     }
 
@@ -156,7 +156,6 @@ the user chose */
 function correctAnswerMessage() {
     $(".message-box").html(`
         <div class='boxes message'>
-        <!-- Different messages will display from message data depending on outcome -->
             <h2>Good Job!</h2>
             <p>You answered correctly!</p>
         
@@ -175,7 +174,7 @@ function noAnswerMessage() {
     console.log('noAnswerMessage ran');
 };
 
-function wrongAnswerMessage() {
+function wrongAnswerMessage(counter) {
     $(".message-box").html(`
         <div class='boxes message'>
         <!-- Different messages will display from message data depending on outcome -->
@@ -208,7 +207,7 @@ function setQuestion(){
 };    
 
 //Renders the final message to the DOM
-function quizEnd() {
+function endQuiz() {
     $('.game-end').show()
     $('.game-end').html(`
         <div class='boxes'>
@@ -216,11 +215,11 @@ function quizEnd() {
             <button type="button" class="restart btn-style">Do Over Please</button>
         </div>
     `)
-    console.log('quizEnd ran');
+    console.log('endQuiz ran');
 };
 
 
 startQuiz()
 setQuestion()
-
+endQuiz()
 
