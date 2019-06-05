@@ -1,3 +1,5 @@
+"use strict";
+
 const STORE = [
     {
         question: "Blood sugar is also known as?",
@@ -5,9 +7,9 @@ const STORE = [
         choices: ["Fructose","Glucose","Cellulose"],
     },
     {
-        question: "Food with a high glycemic index means:",
-        answer: "it contains alot of glucose.",
-        choices: ["it contains alot of glucose.","there is a net amount of glucose.","there is a high amount of fat."],
+        question: "What does 'high glycemic index' mean?",
+        answer: "It contains alot of glucose.",
+        choices: ["It contains alot of glucose.","There is a net amount of glucose.","There is a high amount of fat."],
     },
     {
         question: "Diabetics can eat:",
@@ -15,9 +17,9 @@ const STORE = [
         choices: ["Fish, meats, cheese, ice cream","Meat, sugar-free food, nuts","Meat, fruits, potatoes","All of the above","None of the above"],
     },
     {
-        question: "You are more likely to get diabetes if:",
-        answer: "your parent has it.",
-        choices: ["your parent has it.","you are overweight.","you eat a lot of sugar."],
+        question: "When are you more likely to get diabetes?",
+        answer: "When your parent has it.",
+        choices: ["When your parent has it.","When you are overweight.","When you eat a lot of sugar."],
     },
     {
         question: "What's makes Type 1 different from Type 2?",
@@ -25,7 +27,7 @@ const STORE = [
         choices: ["It's the good one.","Your body doesn't make its own insulin.","Your body is resistant to insulin.", "You get it when your are young."],
     },
     {
-        question: "Low blood sugar is also called:",
+        question: "What is low blood sugar also called?",
         answer: "Hypoglycemia",
         choices: ["Hypoglycemia","Hyperglycemia","Hypothyroidism", "Hypothalamus"],
     },
@@ -54,100 +56,107 @@ const STORE = [
 
 const objState = {
     counter: 0,
-    questionNumber: 1, 
-    countTo: 10,
+    countTo: STORE.length,
     points: 0,
     errors: 0,
 }
 
-/*Event Listeners for message alerts and 
-quiz restart*/
+//On click, hides first page and render button
+function startQuiz() {
+    $('.intro').on('click', '.start-btn', function () {
+        $('.intro').remove()
+        $('.question-form').show()
+        $('footer').show()
+    });
 
-// calls on checkAnswer function to determine which message to show
+    setQuestion(objState)
+    renderScoreboard(objState)
+    
+    console.log('startQuiz ran');
+};
+
+// Event listeners for question and message buttons
 $('.question-form').on('click', '.checkAnswer', function () {
     checkAnswer(objState)
+    $('.message-box').show() 
     $('.question-form').hide()
-})
+});
 
-//stays on previous question until user makes a choice
+//If a user doesn't make a choice; stay on the current question
 $('.message-box').on('click', '.stay', function () {
     $('.message-box').hide()
     $('.question-form').show()
 });
 
-//moves on to the next question *after* the alert message
-$('.message-box').on('click', '.nxtQuestion', function () {
-    // scoreboard()
-
-    if (objState.questionNumber === objState.countTo){
-        endQuiz()
-        $('.message-box').hide()
-        $('footer').hide()
-    } else {
-        $('.message-box').hide()
-        objState['counter']++
-        setQuestion(objState)   
-        $('.question-form').show()
-    }      
+//Event handler to restart quiz
+$('main').on('click', '.restart', function (event) {
+    location.reload();
 });
 
-//restarts quiz ; reloads to the beginning
-$('.restart').on('click', function () {
-    document.location.reload();
-})
 
-function startQuiz() {
-    // Button should start the quiz 
-    // Hide the start
-    $('.intro').on('click', '.start-btn', function () {
-        $('.intro').hide()
-        $('.question-form').show()
-        $('footer').show()
+//moves on to the next question *after* the alert message
+function handleNextQuestion() {
+    $('.message-box').on('click', '.nxtQuestion', function () {
+        let questionNumber = objState.counter + 1
+        if (questionNumber === objState.countTo) {
+            endQuiz()
+            $('footer').hide()
+        } else {
+            objState['counter']++
+            setQuestion(objState)
+            renderScoreboard(objState)   
+            $('.question-form').show()
+        }  
+        $('.message-box').hide()    
     });
-        // scoreboard()
-    setQuestion(objState)
-    console.log('startQuiz ran');
 };
 
-//Template for the scoreboard on start quiz
-// function renderScoreboard() {
-//     $('.score').html(`
-//         <ul>
-//         <li class='page'>Question ${questionNumber} of 10</li>
-//         <li class='questions-correct'>Correct: ${points}</li>
-//         <li class='questions-incorrect'>Incorrect: ${errors}</li>
-//         </ul>
-//     `)
-//     console.log('scoreboard ran');
-// };
+//Template for setting and rendering question
+function setQuestion(obj){
+    let choices = STORE[obj.counter].choices
+    $('.question-number').text(obj.counter + 1)
+    $('.question-sentence').text(STORE[obj.counter].question)
 
+    //Iterator for question choices depending on how many choices
+    choices.forEach(item=>
+         $('.question-sentence').append(`
+            <p>
+            <input type="radio" name="question-choice" value="${item}" required>
+            <label for="option-${item}">${item}</label>
+            </p>`)
+    );
+};
 
-/*This function checks the user answer against
-the actual answer and will run then return the appropriate message */
+// Render template for the scoreboard on start quiz
+function renderScoreboard(obj) {
+    $('.score').html(`
+        <ul>
+        <li class='page'>Question ${obj['counter'] + 1} of 10</li>
+        <li class='questions-correct'>Correct: ${obj['points']}</li>
+        <li class='questions-incorrect'>Incorrect: ${obj['errors']}</li>
+        </ul>
+    `)
+    console.log('scoreboard ran');
+};
 
+//Check against correct answer in when answer is submitted
 function checkAnswer(obj) {
     let chosenAnswer = $("[type='radio']:checked").val()
     
     if (chosenAnswer === undefined){
-        noAnswerMessage()
-        $('.message-box').show()      
+        noAnswerMessage()     
     } else if (chosenAnswer === STORE[obj.counter].answer){
         correctAnswerMessage()
-        $('.message-box').show()
         obj["points"] ++
     } else if (chosenAnswer !== STORE[obj.counter].answer) {
         wrongAnswerMessage(objState)
-        $('.message-box').show()
         obj["errors"] ++
     }
 
-    $('question-form').hide()
     console.log('checkAnswer ran');
 };
 
-/* The following three messages will render depending on the answer 
-the user chose */
-
+// Render message templates depending on user answer
 function correctAnswerMessage() {
     $(".message-box").html(`
         <div class='boxes message'>
@@ -174,7 +183,6 @@ function wrongAnswerMessage(obj) {
     
     $(".message-box").html(`
         <div class='boxes message'>
-        <!-- Different messages will display from message data depending on outcome -->
             <h2>Whoops!</h2>
             <p>Wrong answer! The correct answer was: </p>
             <p>${correctChoice}</span></p>
@@ -184,40 +192,46 @@ function wrongAnswerMessage(obj) {
 
     console.log('wrongAnswerMessage ran');
 };
+// End of message templates
 
+//Renders after final question and feedback
+function endQuiz() {
+    let goodScore = "You did the thing! Feel the love!"
+    let lowScore = "A little research never hurt nobody! Start here:"
+    let points = objState['points']
 
-//Renders the questions to the DOM
-function setQuestion(obj, index){
-    let choices = STORE[obj.counter].choices
-    $('.question-number').text(obj.counter + 1)
-    $('.question-sentence').text(STORE[obj.counter].question)
+    renderResults(objState)
 
-    //interator for question choices
-    choices.forEach(item=>
-         $('.question-sentence').append(`
-            <p>
-            <input type="radio" name="question-choice" value="${item}" required>
-            <label for="option-${item}">${item}</label>
-            </p>`)
-    );
+    if (points <= 5) {
+        $('.finalMessage').text(lowScore)
+        $('.video-container').html(`
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/Es2f5MsEWmg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`)
+    } else {
+        $('.finalMessage').text(goodScore)
+    }; 
+    
+    $('.game-end').show()
 };
 
-//Renders the final message to the DOM
-// function endQuiz() {
-//     $('.game-end').show()
-//     $('.game-end').html(`
-//         <div class='boxes'>
-//             <h2>You scored ${points} out of ${questionNumber}</h2>
-//             <button type="button" class="restart btn-style">Do Over Please</button>
-//         </div>
-//     `)
-//     console.log('endQuiz ran');
-// };
+function renderResults(obj) {
+    //template
+    $('.game-end').html(`
+        <div class='boxes'>
+            <h2>You scored ${obj['points']} out of ${obj['countTo']}</h2>
+            <p><span class='finalMessage'></span></p>
+            <div class='video-container'></div>
+            <button type="button" class="restart btn-style">Do Over Please</button>
+        </div>
+    `)
+};
 
 
-startQuiz()
-setQuestion(objState)
-// scoreboard()
+function playQuiz() {
+    startQuiz();
+    handleNextQuestion();  
+}
+
+$(playQuiz)
 
 
 
