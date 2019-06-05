@@ -52,19 +52,13 @@ const STORE = [
 
 ];
 
-// const objState = {
-//     counter : 0,
-//     questionNumber : counter + 1, 
-//     countTo: 10,
-//     points: 0,git 
-//     errors: 0,
-// }
-
-let counter = 0
-let questionNumber = 1 
-let countTo = 0
-let points = 0 
-let errors = 0
+const objState = {
+    counter: 0,
+    questionNumber: 1, 
+    countTo: 10,
+    points: 0,
+    errors: 0,
+}
 
 /*Event Listeners for message alerts and 
 quiz restart*/
@@ -84,7 +78,7 @@ $('.message-box').on('click', '.stay', function () {
 //moves on to the next question *after* the alert message
 $('.message-box').on('click', '.nxtQuestion', function () {
     questionNumber ++
-    scoreboard()
+    // scoreboard()
 
     if (questionNumber === countTo){
         endQuiz()
@@ -94,7 +88,7 @@ $('.message-box').on('click', '.nxtQuestion', function () {
         $('.message-box').hide()
         counter ++
         $('.question-form').show()
-        setQuestion()
+        setQuestion(objState)
     } 
 });
 
@@ -111,44 +105,44 @@ function startQuiz() {
             $('.question-form').show()
             $('footer').show()
         });
-        scoreboard()
+        // scoreboard()
         console.log('startQuiz ran');
 };
 
 //Template for the scoreboard on start quiz
-function scoreboard() {
-    $('.score').html(`
-        <ul>
-        <li class='page'>Question ${questionNumber} of 10</li>
-        <li class='questions-correct'>Correct: ${points}</li>
-        <li class='questions-incorrect'>Incorrect: ${errors}</li>
-        </ul>
-    `)
-    console.log('scoreboard ran');
-};
+// function scoreboard() {
+//     $('.score').html(`
+//         <ul>
+//         <li class='page'>Question ${questionNumber} of 10</li>
+//         <li class='questions-correct'>Correct: ${points}</li>
+//         <li class='questions-incorrect'>Incorrect: ${errors}</li>
+//         </ul>
+//     `)
+//     console.log('scoreboard ran');
+// };
 
 
 /*This function checks the user answer against
 the actual answer and will run then return the appropriate message */
 
-function checkAnswer() {
-    let chosenAnswer = $("[type='radio']:checked").val()
+// function checkAnswer() {
+//     let chosenAnswer = $("[type='radio']:checked").val()
     
-    if (chosenAnswer === undefined){
-        noAnswerMessage()
-    } else if (chosenAnswer === STORE[counter].answer){
-        correctAnswerMessage()
-        points ++
-    } else if (chosenAnswer !== STORE[counter].answer) {
-        wrongAnswerMessage(counter)
-        errors ++
-    }
+//     if (chosenAnswer === undefined){
+//         noAnswerMessage()
+//     } else if (chosenAnswer === STORE[counter].answer){
+//         correctAnswerMessage()
+//         points ++
+//     } else if (chosenAnswer !== STORE[counter].answer) {
+//         wrongAnswerMessage(counter)
+//         errors ++
+//     }
 
-    scoreboard()
-    $('question-form').hide()
-    $('.message-box').show()
-    console.log('checkAnswer ran');
-};
+//     // scoreboard()
+//     $('question-form').hide()
+//     $('.message-box').show()
+//     console.log('checkAnswer ran');
+// };
 
 /* The following three messages will render depending on the answer 
 the user chose */
@@ -189,10 +183,10 @@ function wrongAnswerMessage(counter) {
 
 
 //Renders the questions to the DOM
-function setQuestion(){
-    let choices = STORE[counter].choices
-    $('.question-number').text(questionNumber)
-    $('.question-sentence').text(STORE[counter].question)
+function setQuestion(obj){
+    let choices = STORE[obj.counter].choices
+    $('.question-number').text(obj.questionNumber)
+    $('.question-sentence').text(STORE[obj.counter].question)
 
     //interator for question choices
     choices.forEach(item=>
@@ -204,7 +198,7 @@ function setQuestion(){
     );
 
     console.log('setQuestion ran');
-};    
+};
 
 //Renders the final message to the DOM
 function endQuiz() {
@@ -220,6 +214,6 @@ function endQuiz() {
 
 
 startQuiz()
-setQuestion()
-endQuiz()
+setQuestion(objState)
+
 
