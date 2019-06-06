@@ -208,7 +208,7 @@ function endQuiz() {
         <iframe width="560" height="315" src="https://www.youtube.com/embed/Es2f5MsEWmg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen alt="Diabetes Video"></iframe>`)
     } else {
         $('.finalMessage').text(goodScore)
-        $('.finalMessage').html(`<img class='thumb-gif' src="https://raw.githubusercontent.com/josno/quiz-app/master/Assets/thumbs-up-gif.gif" alt="Thumbs Up">`)
+        $('.goodScoreImg').html(`<img class='thumb-gif' src="https://raw.githubusercontent.com/josno/quiz-app/master/Assets/thumbs-up-gif.gif" alt="Thumbs Up">`)
     };
 
     $('.game-end').show()
@@ -220,7 +220,7 @@ function renderResults(obj) {
         <div class='boxes'>
             <h2>You scored ${obj['points']} out of ${obj['countTo']}</h2>
             <p><span class='finalMessage'></span></p>
-            <div class='video-container'></div>
+            <div class='video-container goodScoreImg'></div>
             <button type="button" class="restart btn-style">Restart</button>
         </div>
     `)
