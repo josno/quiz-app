@@ -3,6 +3,7 @@
 }
 body {
     background-image: url("https://raw.githubusercontent.com/josno/quiz-app/master/Assets/nurse_background.png");
+    /* background-repeat: no-repeat; */
     background-color: #F2357B;
     font-family: 'Roboto Condensed', Verdana, sans-serif;
 }
@@ -39,6 +40,7 @@ h1 {
 }
 
 h1, footer, .boxes {
+    max-width: 700px;
     background-color: #FFFFFF;
     border: 10px solid #618ddd;
     -webkit-box-shadow: 14px 14px 10px -8px rgba(0,0,0,0.27);
