@@ -4,7 +4,7 @@
 I created a functional quiz app based on the requirements below.
 
 * Click the start button, choose an answer and you'll get a message depending on your choices.
-* You will also receive a ending message depending on your total score.
+* You will also receive an custom ending message depending on your total score.
 
 Demo it [here](https://josno.github.io/quiz-app/) 
 
