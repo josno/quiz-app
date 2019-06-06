@@ -120,7 +120,7 @@ function setQuestion(obj){
     //Iterator for question choices depending on how many choices
     choices.forEach(item=>
          $('.question-sentence').append(`
-            <p>
+            <p class='choices'>
             <input type="radio" name="question-choice" value="${item}" required>
             <label for="option-${item}">${item}</label>
             </p>`)
@@ -159,21 +159,29 @@ function checkAnswer(obj) {
 // Render message templates depending on user answer
 function correctAnswerMessage() {
     $(".message-box").html(`
-        <div class='boxes message'>
+        <div class='boxes message correctAnswer'>
             <h2>Good Job!</h2>
+            <div class='container'>
             <p>You answered correctly!</p>
-        
-            <button type="button" class="nxtQuestion btn-style">Thanks! Next Question</button>
+            </div>
+            <div class='btn-container'>
+            <button type="button" class="nxtQuestion btn-style">Next!</button>
+            </div>
         </div>`)
     console.log('correctAnswerMessage ran')
 };
 
 function noAnswerMessage() {
     $(".message-box").html(`
-        <div class='boxes message'>
+        <div class='boxes message noAnswer'>
             <h2>Wait A Moment!</h2>
-            <p>You forgot to pick an answer! Go back and pick one.</p>
+            <div class='container'>
+            <p>You forgot to pick an answer! </p>
+            <p>Go back and pick one.</p>
+            </div>
+            <div class='btn-container'>
             <button type="button" class="stay btn-style">Okay</button>
+            </div>
         </div>`)
     console.log('noAnswerMessage ran');
 };
@@ -182,12 +190,15 @@ function wrongAnswerMessage(obj) {
     let correctChoice = STORE[obj.counter].answer
     
     $(".message-box").html(`
-        <div class='boxes message'>
+        <div class='boxes message wrongAnswer'>
             <h2>Whoops!</h2>
-            <p>Wrong answer! The correct answer was: </p>
-            <p>${correctChoice}</span></p>
-        
-            <button type="button" class="nxtQuestion btn-style">Gotcha! Next Question</button>
+            <div class="container">
+            <p class="text-container">The correct answer was: </p>
+            <p class="text-container">"${correctChoice}"</p>
+            </div>
+            <div class='btn-container'>
+            <button type="button" class="nxtQuestion btn-style">Gotcha!</button>
+            </div>
         </div>`)
 
     console.log('wrongAnswerMessage ran');
@@ -220,7 +231,7 @@ function renderResults(obj) {
             <h2>You scored ${obj['points']} out of ${obj['countTo']}</h2>
             <p><span class='finalMessage'></span></p>
             <div class='video-container'></div>
-            <button type="button" class="restart btn-style">Do Over Please</button>
+            <button type="button" class="restart btn-style">Restart</button>
         </div>
     `)
 };
