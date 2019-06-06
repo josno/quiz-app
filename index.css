@@ -6,27 +6,26 @@ body {
     /* background-repeat: no-repeat; */
     background-color: #4CD1D1;
     font-family: 'Roboto Condensed', Verdana, sans-serif;
-    font-size: 12px;
+    font-size: 16px;
 }
 
 /* styling for title; will stay on top of page
    margin-top to show background bleed through */
 h1 {
     height: 100px;
-    width: 75%;
+    width: 95%;
     max-width: 700px;
     font-family: 'Fredoka One', Verdana, sans-serif;
     text-align: center;
-    margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
-    font-size: 20px;
+    font-size: 25px;
 }
 
 /* centers title text */
 .header-text {
     display: inline-block;
-    margin-top: 20px;
+    margin-top: 10px;
     color: transparent;
     background: #2BBDBD;
     -webkit-background-clip: text;
@@ -57,8 +56,8 @@ h1, footer, .boxes {
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
-    height: 400px;
-    width: 75%;
+    height: 500px;
+    width: 95%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -120,7 +119,7 @@ iframe {
 }
 
 footer {
-    width: 75%;
+    width: 95%;
     margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
@@ -159,6 +158,10 @@ ul {
     .boxes {
         height: 500px;
     }
+
+    .boxes, h1, footer {
+        width: 75%;
+    }
 }
 
 @media only screen and (min-width: 500px) {
@@ -167,7 +170,7 @@ ul {
     }
 
     .header-text {
-        font-size: 35px;
+        font-size: 30px;
         margin-top: 20px;
     }
 
@@ -177,6 +180,10 @@ ul {
 
     .boxes {
         height: 600px;
+    }
+
+    .boxes, h1, footer {
+        width: 75%;
     }
 
   }
