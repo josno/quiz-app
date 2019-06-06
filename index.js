@@ -22,9 +22,9 @@ const STORE = [
         choices: ["When your parent has it.","When you are overweight.","When you eat a lot of sugar."],
     },
     {
-        question: "What's makes Type 1 different from Type 2?",
-        answer: "Your body doesn't make its own insulin.",
-        choices: ["It's the good one.","Your body doesn't make its own insulin.","Your body is resistant to insulin.", "You get it when your are young."],
+        question: "Why is Type 1 different from Type 2?",
+        answer: "Your body doesn't make insulin.",
+        choices: ["It's the good one.","Your body doesn't make insulin.","Your body is resistant to insulin.", "You get it when your are young."],
     },
     {
         question: "What is low blood sugar also called?",
@@ -32,12 +32,12 @@ const STORE = [
         choices: ["Hypoglycemia","Hyperglycemia","Hypothyroidism", "Hypothalamus"],
     },
     {
-        question: "What's one way to raise blood sugar quickly?",
+        question: "How can you raise blood sugar quickly?",
         answer: "Drink some juice.",
         choices: ["Eat a steak.","Eat some nuts.","Drink some water.","Drink some juice."],
     },
     {
-        question: "How many grams of carbohydrates is in a 375ml can of Coke?",
+        question: "A 375ml can of Coke has how many grams of carbohydrates?",
         answer: "39.8",
         choices: ["39.8","21.5","45.6","38.9"],
     },
@@ -62,23 +62,19 @@ const objState = {
 }
 
 //On click, hides first page and render button
-function startQuiz() {
-    $('.intro').on('click', '.start-btn', function () {
-        $('.intro').remove()
-        $('.question-form').show()
-        $('footer').show()
-    });
 
+$('.intro').on('click', '.start-btn', function () {
+    $('.intro').remove()
+    $('.question-form').show()
+    $('footer').show()
     setQuestion(objState)
     renderScoreboard(objState)
-    
-    console.log('startQuiz ran');
-};
+});
 
 // Event listeners for question and message buttons
 $('.question-form').on('click', '.checkAnswer', function () {
     checkAnswer(objState)
-    $('.message-box').show() 
+    $('.message-box').show()
     $('.question-form').hide()
 });
 
@@ -95,21 +91,21 @@ $('main').on('click', '.restart', function (event) {
 
 
 //moves on to the next question *after* the alert message
-function handleNextQuestion() {
-    $('.message-box').on('click', '.nxtQuestion', function () {
-        let questionNumber = objState.counter + 1
-        if (questionNumber === objState.countTo) {
-            endQuiz()
-            $('footer').hide()
-        } else {
-            objState['counter']++
-            setQuestion(objState)
-            renderScoreboard(objState)   
-            $('.question-form').show()
-        }  
-        $('.message-box').hide()    
-    });
-};
+
+$('.message-box').on('click', '.nxtQuestion', function () {
+    let questionNumber = objState.counter + 1
+    if (questionNumber === objState.countTo) {
+        endQuiz()
+        $('footer').hide()
+    } else {
+        objState['counter']++
+        setQuestion(objState)
+        renderScoreboard(objState)
+        $('.question-form').show()
+    }
+    $('.message-box').hide()
+});
+
 
 //Template for setting and rendering question
 function setQuestion(obj){
@@ -121,7 +117,7 @@ function setQuestion(obj){
     choices.forEach(item=>
          $('.question-sentence').append(`
             <p class='choices'>
-            <input type="radio" name="question-choice" value="${item}" required>
+            <input type="radio" name="question-choice" id="option-${item}" value="${item}" required>
             <label for="option-${item}">${item}</label>
             </p>`)
     );
@@ -136,15 +132,14 @@ function renderScoreboard(obj) {
         <li class='questions-incorrect'>Incorrect: ${obj['errors']}</li>
         </ul>
     `)
-    console.log('scoreboard ran');
 };
 
 //Check against correct answer in when answer is submitted
 function checkAnswer(obj) {
     let chosenAnswer = $("[type='radio']:checked").val()
-    
+
     if (chosenAnswer === undefined){
-        noAnswerMessage()     
+        noAnswerMessage()
     } else if (chosenAnswer === STORE[obj.counter].answer){
         correctAnswerMessage()
         obj["points"] ++
@@ -152,8 +147,6 @@ function checkAnswer(obj) {
         wrongAnswerMessage(objState)
         obj["errors"] ++
     }
-
-    console.log('checkAnswer ran');
 };
 
 // Render message templates depending on user answer
@@ -168,12 +161,11 @@ function correctAnswerMessage() {
             <button type="button" class="nxtQuestion btn-style">Next!</button>
             </div>
         </div>`)
-    console.log('correctAnswerMessage ran')
 };
 
 function noAnswerMessage() {
     $(".message-box").html(`
-        <div class='boxes message noAnswer'>
+        <div class='boxes message noAnswer' id='message'>
             <h2>Wait A Moment!</h2>
             <div class='container'>
             <p>You forgot to pick an answer! </p>
@@ -183,12 +175,11 @@ function noAnswerMessage() {
             <button type="button" class="stay btn-style">Okay</button>
             </div>
         </div>`)
-    console.log('noAnswerMessage ran');
 };
 
 function wrongAnswerMessage(obj) {
     let correctChoice = STORE[obj.counter].answer
-    
+
     $(".message-box").html(`
         <div class='boxes message wrongAnswer'>
             <h2>Whoops!</h2>
@@ -200,15 +191,13 @@ function wrongAnswerMessage(obj) {
             <button type="button" class="nxtQuestion btn-style">Gotcha!</button>
             </div>
         </div>`)
-
-    console.log('wrongAnswerMessage ran');
 };
 // End of message templates
 
 //Renders after final question and feedback
 function endQuiz() {
     let goodScore = "You did the thing! Feel the love!"
-    let lowScore = "A little research never hurt nobody! Start here:"
+    let lowScore = "Here's a fun video explaining the 'betes:"
     let points = objState['points']
 
     renderResults(objState)
@@ -216,11 +205,12 @@ function endQuiz() {
     if (points <= 5) {
         $('.finalMessage').text(lowScore)
         $('.video-container').html(`
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/Es2f5MsEWmg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`)
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/Es2f5MsEWmg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen alt="Diabetes Video"></iframe>`)
     } else {
         $('.finalMessage').text(goodScore)
-    }; 
-    
+        $('.finalMessage').html(`<img class='thumb-gif' src="https://raw.githubusercontent.com/josno/quiz-app/master/Assets/thumbs-up-gif.gif" alt="Thumbs Up">`)
+    };
+
     $('.game-end').show()
 };
 
@@ -235,15 +225,3 @@ function renderResults(obj) {
         </div>
     `)
 };
-
-
-function playQuiz() {
-    startQuiz();
-    handleNextQuestion();  
-}
-
-$(playQuiz)
-
-
-
-
