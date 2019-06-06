@@ -1,14 +1,38 @@
 # Thinkful Project: Quiz App
 
-## Wireframe Version
+## Project Submission Version
+-I created a functional quiz app based on the requirements below.
+-Click the start button, choose an answer and you'll get a message depending on your choices.
+-You will also receive a ending message depending on your total score.
 
-### You will find the following: 
+Demo it [here](https://josno.github.io/quiz-app/) 
 
-(Please read in-line comments)
+### Project Requirements
+While you're building your quiz app, you'll need to keep in mind what your app must do and how it should be built.
 
-1. index.html - wireframe that shows what will be render 
-2. index.css - styling for initial wireframe
-3. questions.js - storage for quiz questions
+### User experience requirements
+The following requirements cover what the app must do, from the user's perspective.
+
+-The starting screen should have a button that users can click to start the quiz.
+-Users should be prompted through a series of at least 5 multiple choice questions that they can answer.
+-Users should be asked questions 1 after the other.
+-Users should only be prompted with 1 question at a time.
+-Users should not be able to skip questions.
+-Users should also be able to see which question they're on (for instance, "7 out of 10") and their current score ("5 correct, 2 incorrect").
+-Upon submitting an answer, users should:
+receive textual feedback about their answer. If they were incorrect, they should be told the correct answer.
+be moved onto the next question (or interact with an element to move on).
+-Users should be shown their overall score at the end of the quiz. In other words, how many questions they got right out of the total questions asked.
+-Users should be able to start a new quiz.
+
+### Technical requirements
+Your quiz app must:
+
+-Render answer choices in a <form>.
+-Use semantic HTML, along with CSS and jQuery.
+-Follow a11y best practices.
+-Refer back to the checkpoints on accessibility and forms for help.
+-Use responsive design.
+-Be fully usable by keyboard (which will be easy enough if you start with a form).
 
  
-See it [here](https://josno.github.io/quiz-app/)
