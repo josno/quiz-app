@@ -1,9 +1,10 @@
 # Thinkful Project: Quiz App
 
 ## Project Submission Version
--I created a functional quiz app based on the requirements below.
--Click the start button, choose an answer and you'll get a message depending on your choices.
--You will also receive a ending message depending on your total score.
+I created a functional quiz app based on the requirements below.
+
+* Click the start button, choose an answer and you'll get a message depending on your choices.
+* You will also receive a ending message depending on your total score.
 
 Demo it [here](https://josno.github.io/quiz-app/) 
 
@@ -28,7 +29,7 @@ be moved onto the next question (or interact with an element to move on).
 ### Technical requirements
 Your quiz app must:
 
-* Render answer choices in a <form>.
+* Render answer choices in a `<form>`.
 * Use semantic HTML, along with CSS and jQuery.
 * Follow a11y best practices.
 * Refer back to the checkpoints on accessibility and forms for help.
