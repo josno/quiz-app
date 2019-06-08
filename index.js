@@ -55,7 +55,7 @@ const STORE = [
 ];
 
 const objState = {
-    counter: 0,
+    counter: 9,
     countTo: STORE.length,
     points: 0,
     errors: 0,
@@ -64,9 +64,8 @@ const objState = {
 //On click, hides first page and render button
 
 $('.intro').on('click', '.start-btn', function () {
-    $('.intro').remove()
-    $('.question-form').show()
-    $('footer').show()
+    $('.intro').hide()
+    $('.question-form, footer').show()
     setQuestion(objState)
     renderScoreboard(objState)
 });
@@ -86,9 +85,17 @@ $('.message-box').on('click', '.stay', function () {
 
 //Event handler to restart quiz
 $('main').on('click', '.restart', function (event) {
-    location.reload();
+    $('.intro').show();
+    $('.game-end').hide();
+    $('label').remove();
+    resetObj(objState);
 });
 
+function resetObj(obj) {
+    obj.counter = 0
+    obj.points= 0
+    obj.errors = 0
+}
 
 //moves on to the next question *after* the alert message
 
@@ -99,6 +106,7 @@ $('.message-box').on('click', '.nxtQuestion', function () {
         $('footer').hide()
     } else {
         objState['counter']++
+        $('label').remove();
         setQuestion(objState)
         renderScoreboard(objState)
         $('.question-form').show()
@@ -115,11 +123,10 @@ function setQuestion(obj){
 
     //Iterator for question choices depending on how many choices
     choices.forEach(item=>
-         $('.question-sentence').append(`
-            <p class='choices'>
+         $('.choices').append(`
+            <label for="option-${item}">
             <input type="radio" name="question-choice" id="option-${item}" value="${item}" required>
-            <label for="option-${item}">${item}</label>
-            </p>`)
+            ${item}</label>`)
     );
 };
 

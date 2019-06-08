@@ -25,7 +25,7 @@ h1 {
 /* centers title text */
 .header-text {
     display: inline-block;
-    margin-top: 10px;
+    margin-top: 15px;
     color: transparent;
     background: #2BBDBD;
     -webkit-background-clip: text;
@@ -92,6 +92,7 @@ h2, .quiz-description, .container {
 
 .btn-style:hover {
     background-color: #4CD1D1;
+    cursor: pointer;
 }
 
 .btn-style:active {
@@ -100,6 +101,10 @@ h2, .quiz-description, .container {
     transform: translateY(4px);
 }
 
+label {
+    display: block;
+    padding: 5px;
+}
 .question-start {
     margin-top: 60px;
 }
