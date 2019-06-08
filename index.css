@@ -12,6 +12,9 @@ body {
 /* styling for title; will stay on top of page
    margin-top to show background bleed through */
 h1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 100px;
     width: 95%;
     max-width: 700px;
@@ -24,8 +27,6 @@ h1 {
 
 /* centers title text */
 .header-text {
-    display: inline-block;
-    margin-top: 15px;
     color: transparent;
     background: #2BBDBD;
     -webkit-background-clip: text;
@@ -105,6 +106,7 @@ label {
     display: block;
     padding: 5px;
 }
+
 .question-start {
     margin-top: 60px;
 }
@@ -153,7 +155,6 @@ ul {
 
     .header-text {
         font-size: 25px;
-        margin-top: 10px;
     }
 
     h2, div.container > p, span.question-number {
@@ -176,7 +177,6 @@ ul {
 
     .header-text {
         font-size: 30px;
-        margin-top: 20px;
     }
 
     h2, div.container > p, span.question-number {

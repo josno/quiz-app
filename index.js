@@ -55,7 +55,7 @@ const STORE = [
 ];
 
 const objState = {
-    counter: 9,
+    counter: 0,
     countTo: STORE.length,
     points: 0,
     errors: 0,
